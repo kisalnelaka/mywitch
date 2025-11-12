@@ -1,0 +1,38 @@
+services:
+  backend:
+    build: ./backend
+    container_name: pdf-backend
+    hostname: backend
+    environment:
+      # Point to your host's running Ollama (Arch Linux)
+      OLLAMA_HOST: http://host.docker.internal:11434
+      OLLAMA_MODEL: mistral
+      CHROMA_DIR: /data/chroma
+      DB_PATH: /data/db.sqlite
+      UPLOAD_DIR: /data/uploads
+    volumes:
+      - ./data:/data
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
+    networks:
+      app_net:
+        aliases: [backend]
+
+  frontend:
+    build: ./frontend
+    container_name: pdf-frontend
+    hostname: frontend
+    environment:
+      BACKEND_URL: http://backend:8000
+    ports:
+      - "8501:8501"
+    depends_on: [backend]
+    networks:
+      app_net:
+        aliases: [frontend]
+
+networks:
+  app_net:
+    driver: bridge

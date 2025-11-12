@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+pypdf2
+python-multipart
+
+# RAG stack
+chromadb
+sentence-transformers
+langchain>=0.2
+langchain-community>=0.2
+langchain-ollama>=0.1
+langchain-text-splitters>=0.2
+
+# metrics / storage
+SQLAlchemy>=2.0
+pandas
